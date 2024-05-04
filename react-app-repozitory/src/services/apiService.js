@@ -1,8 +1,16 @@
 import axios from 'axios';
 const API_BASE_URL = 'https://localhost:7275/swagger/index.html';
+
 const apiService = axios.create({
   baseURL: API_BASE_URL,
 });
+export const setAuthToken = (token) => {
+  if (token) {
+    apiService.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete apiService.defaults.headers.common['Authorization'];
+  }
+};
 export const getSchools = async () => {
   try {
     const response = await apiService.get('/schools');
